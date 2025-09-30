@@ -1,0 +1,75 @@
+# RNN Sprint: Keras Recurrent Layers
+
+This folder contains runnable scripts to compare Keras recurrent layers:
+
+- SimpleRNN, GRU, LSTM on IMDB sentiment (`imdb_rnn_compare.py`)
+- ConvLSTM2D demo on synthetic moving sequences (`convlstm_demo.py`)
+- Official-style IMDB LSTM sample (`imdb_lstm_official.py`)
+- Official-style ConvLSTM2D next-frame demo (`convlstm_official.py`)
+
+## Requirements
+
+- Python 3.9+
+- TensorFlow (CPU is fine):
+
+```bash
+pip install --upgrade pip
+pip install tensorflow
+```
+
+## 1) IMDB comparison (SimpleRNN vs GRU vs LSTM)
+
+ 
+```bash
+python imdb_rnn_compare.py --epochs 2 --maxlen 200 --rnn_units 64 --embed_dim 64 --batch_size 128 --models SimpleRNN,GRU,LSTM
+```
+
+Flags you may tweak for speed/accuracy trade-off:
+
+- `--max_features 20000` vocabulary size
+- `--maxlen 200` sequence length
+- `--epochs 1..3` higher gives better accuracy but slower
+- `--models SimpleRNN,GRU,LSTM` choose subset to run
+
+Typical results (CPU, few epochs): LSTM ≥ GRU » SimpleRNN on accuracy.
+
+## 2) ConvLSTM2D demo (synthetic moving squares)
+
+ 
+```bash
+python convlstm_demo.py --num_sequences 1000 --timesteps 10 --epochs 5 --batch_size 64
+```
+
+You can reduce `--num_sequences` or `--epochs` for faster runs.
+
+## 3) Official-style scripts
+
+- IMDB LSTM (adapted imports, fewer epochs by default):
+
+ 
+```bash
+python imdb_lstm_official.py --epochs 5 --maxlen 80 --batch_size 32 --units 128
+```
+
+- ConvLSTM2D next-frame prediction (no plotting; prints shape):
+
+ 
+```bash
+python convlstm_official.py --epochs 20 --n_samples 1200 --n_frames 15 --batch_size 10
+```
+Notes:
+
+- The ConvLSTM demo uses generated data to avoid external downloads.
+- For GPU acceleration, install the GPU build of TensorFlow and appropriate drivers.
+
+## 4) Reuters topics (advance assignment)
+
+Compare RNN cells on Reuters newswire classification (46 classes):
+
+```bash
+python reuters_rnn_compare.py --epochs 3 --maxlen 200 --rnn_units 64 --embed_dim 64 --batch_size 128 --models SimpleRNN,GRU,LSTM
+```
+
+Adjust `--epochs` down for speed if needed.
+
+
